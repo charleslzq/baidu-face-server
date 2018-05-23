@@ -96,7 +96,7 @@ open class AipFaceClientConfiguration {
     }
 
     @Bean
-    @ConditionalOnMissingBean(name = arrayOf("gsonForAipFace"))
+    @ConditionalOnMissingBean(name = ["gsonForAipFace"])
     open fun gsonForAipFace() = Gson()
 
     @Bean
@@ -109,7 +109,7 @@ open class AipFaceClientConfiguration {
 
     private fun AipFaceClientProperties.checkAndCreateAipFace(): AipFace {
         if (appId.isNullOrBlank() || apiKey.isNullOrBlank() || secretKey.isNullOrBlank()) {
-            throw IllegalArgumentException("App Id/Api Key/Serect Key required")
+            throw IllegalArgumentException("App Id/Api Key/Secret Key required")
         }
         return AipFace(appId, apiKey, secretKey)
     }

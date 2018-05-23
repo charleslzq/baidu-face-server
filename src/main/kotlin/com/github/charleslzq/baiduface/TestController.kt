@@ -13,7 +13,9 @@ class TestController {
 
     @RequestMapping("/test")
     fun test() {
-        val result = baiduFaceApi.detect(Image(Image.Type.FACE_TOKEN, "123"), 1, FaceSource.LIVE, *FaceField.values())
+        val result = baiduFaceApi.detect(Image(
+                Image.Type.URL, "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=329095528,1972228230&fm=200&gp=0.jpg"
+        ), 1, FaceSource.LIVE, *FaceField.values())
         print(result.toString())
     }
 }

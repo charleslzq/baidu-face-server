@@ -16,7 +16,7 @@ enum class FaceField(val keyword: String) {
     AGE("age"),
     BEAUTY("beauty"),
     EXPRESSION("expression"),
-    FACE_SHAPE("faceshapt"),
+    FACE_SHAPE("faceshape"),
     GENDER("gender"),
     GLASSES("glasses"),
     LANDMARK("landmark"),
