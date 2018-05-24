@@ -43,29 +43,29 @@ open class AipFaceClientProperties {
      * setup proxy
      */
     var proxy: Proxy = Proxy()
+}
 
-    enum class ProxyType {
-        NONE,
-        HTTP,
-        SOCKET
-    }
+enum class ProxyType {
+    NONE,
+    HTTP,
+    SOCKET
+}
 
-    class Proxy {
-        /**
-         * specify the type of proxy, can be none/http/socket
-         */
-        var type: ProxyType = ProxyType.NONE
+class Proxy {
+    /**
+     * specify the type of proxy, can be none/http/socket
+     */
+    var type: ProxyType = ProxyType.NONE
 
-        /**
-         * proxy host
-         */
-        var host: String? = null
+    /**
+     * proxy host
+     */
+    var host: String? = null
 
-        /**
-         * proxy port
-         */
-        var port: Int = -1
-    }
+    /**
+     * proxy port
+     */
+    var port: Int = -1
 }
 
 @Configuration
@@ -82,13 +82,13 @@ open class AipFaceClientConfiguration {
             setSocketTimeoutInMillis(it.socketTimeout)
 
             when (it.proxy.type) {
-                AipFaceClientProperties.ProxyType.NONE -> {
+                ProxyType.NONE -> {
                 }
-                AipFaceClientProperties.ProxyType.HTTP -> {
+                ProxyType.HTTP -> {
                     it.checkProxySetting()
                     setHttpProxy(it.proxy.host, it.proxy.port)
                 }
-                AipFaceClientProperties.ProxyType.SOCKET -> {
+                ProxyType.SOCKET -> {
                     it.checkProxySetting()
                     setSocketProxy(it.proxy.host, it.proxy.port)
                 }

@@ -1,0 +1,78 @@
+{
+  "groups": [
+    {
+      "name": "charleslzq.baidu.aipface.client",
+      "type": "com.github.charleslzq.baiduface.client.AipFaceClientProperties",
+      "sourceType": "com.github.charleslzq.baiduface.client.AipFaceClientProperties",
+      "description": "Provice configuration for baidu face open api"
+    },
+    {
+      "name": "charleslzq.baidu.aipface.client.proxy",
+      "type": "com.github.charleslzq.baiduface.client.AipFaceClientProperties.Proxy",
+      "sourceType": "com.github.charleslzq.baiduface.client.AipFaceClientProperties.Proxy",
+      "description": "Provice proxy configuration for baidu face open api"
+    }
+  ],
+  "properties": [
+    {
+      "name": "charleslzq.baidu.aipface.client.appId",
+      "type": "java.lang.String",
+      "sourceType": "com.github.charleslzq.baiduface.client.AipFaceClientProperties",
+      "description": "appId, get it from baidu ai official website"
+    },
+    {
+      "name": "charleslzq.baidu.aipface.client.apiKey",
+      "type": "java.lang.String",
+      "sourceType": "com.github.charleslzq.baiduface.client.AipFaceClientProperties",
+      "description": "apiKey, get it from baidu ai official website"
+    },
+    {
+      "name": "charleslzq.baidu.aipface.client.secretKey",
+      "type": "java.lang.String",
+      "sourceType": "com.github.charleslzq.baiduface.client.AipFaceClientProperties",
+      "description": "secretKey, get it from baidu ai official website"
+    },
+    {
+      "name": "charleslzq.baidu.aipface.client.connectionTimeout",
+      "type": "java.lang.Integer",
+      "sourceType": "com.github.charleslzq.baiduface.client.AipFaceClientProperties",
+      "description": "Time out for connection",
+      "defaultValue": 2000
+    },
+    {
+      "name": "charleslzq.baidu.aipface.client.socketTimeout",
+      "type": "java.lang.Integer",
+      "sourceType": "com.github.charleslzq.baiduface.client.AipFaceClientProperties",
+      "description": "Time out for socket",
+      "defaultValue": 60000
+    },
+    {
+      "name": "charleslzq.baidu.aipface.client.proxy.type",
+      "type": "com.github.charleslzq.baiduface.client.ProxyType",
+      "sourceType": "com.github.charleslzq.baiduface.client.Proxy",
+      "description": "specify the type of proxy, can be none/http/socket",
+      "defaultValue": "NONE"
+    },
+    {
+      "name": "charleslzq.baidu.aipface.client.proxy.host",
+      "type": "java.lang.String",
+      "sourceType": "com.github.charleslzq.baiduface.client.Proxy",
+      "description": "proxy host"
+    },
+    {
+      "name": "charleslzq.baidu.aipface.client.proxy.port",
+      "type": "java.lang.Integer",
+      "sourceType": "com.github.charleslzq.baiduface.client.Proxy",
+      "description": "proxy port",
+      "defaultValue": -1
+    },
+    {
+      "name": "charleslzq.baidu.aipface.basePath",
+      "type": "java.lang.String",
+      "description": "Specify url prefix for baidu face controllers",
+      "defaultValue": "/baidu-faces"
+    }
+  ],
+  "hints": [
+  ]
+}
