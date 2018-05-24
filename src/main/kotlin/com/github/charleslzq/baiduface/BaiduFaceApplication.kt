@@ -1,5 +1,6 @@
 package com.github.charleslzq.baiduface
 
+import com.github.charleslzq.baiduface.client.AipFaceClientConfiguration
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.context.annotation.Import

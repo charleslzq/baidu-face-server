@@ -1,4 +1,4 @@
-package com.github.charleslzq.baiduface
+package com.github.charleslzq.baiduface.client
 
 import com.baidu.aip.face.AipFace
 import com.google.gson.Gson
@@ -81,8 +81,9 @@ open class AipFaceClientConfiguration {
             setConnectionTimeoutInMillis(it.connectionTimeout)
             setSocketTimeoutInMillis(it.socketTimeout)
 
-            when(it.proxy.type) {
-                AipFaceClientProperties.ProxyType.NONE -> {}
+            when (it.proxy.type) {
+                AipFaceClientProperties.ProxyType.NONE -> {
+                }
                 AipFaceClientProperties.ProxyType.HTTP -> {
                     it.checkProxySetting()
                     setHttpProxy(it.proxy.host, it.proxy.port)

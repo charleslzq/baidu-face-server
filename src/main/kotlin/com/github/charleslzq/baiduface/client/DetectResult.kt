@@ -1,14 +1,14 @@
-package com.github.charleslzq.baiduface
+package com.github.charleslzq.baiduface.client
 
 import com.google.gson.annotations.SerializedName
 import com.google.gson.reflect.TypeToken
 
-data class DetectResponse(
+data class DetectResult(
         @SerializedName("face_num") val count: Int,
         @SerializedName("face_list") val faceList: List<DetectedFace>
 ) {
-    companion object : FromJson<DetectResponse> {
-        override val typeToken = object : TypeToken<BaiduResponse<DetectResponse>>() {}
+    companion object : FromJson<DetectResult> {
+        override val RESPONSE_TYPE_TOKEN = object : TypeToken<BaiduResponse<DetectResult>>() {}
     }
 }
 
