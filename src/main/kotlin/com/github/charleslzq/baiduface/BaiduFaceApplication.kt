@@ -20,5 +20,9 @@ open class BaiduFaceApplication {
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.SOURCE)
 @MustBeDocumented
-@Import(UserGroupController::class, UserController::class, FaceController::class)
+@Import(
+        UserGroupController::class,
+        UserController::class,
+        FaceController::class
+)
 annotation class EnableBaiduFaceController

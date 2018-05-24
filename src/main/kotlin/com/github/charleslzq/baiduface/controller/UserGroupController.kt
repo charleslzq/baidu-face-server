@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/groups")
 class UserGroupController {
     @Autowired
-    lateinit var baiduFaceApi: BaiduFaceApi
+    private lateinit var baiduFaceApi: BaiduFaceApi
 
     @List
     fun list(

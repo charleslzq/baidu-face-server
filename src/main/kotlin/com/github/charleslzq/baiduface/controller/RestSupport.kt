@@ -24,5 +24,11 @@ annotation class Get
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
 @MustBeDocumented
+@RequestMapping(path = ["/{id}"], method = [RequestMethod.PUT])
+annotation class Update
+
+@Target(AnnotationTarget.FUNCTION)
+@Retention(AnnotationRetention.RUNTIME)
+@MustBeDocumented
 @RequestMapping(path = ["/{id}"], method = [RequestMethod.DELETE])
 annotation class Delete

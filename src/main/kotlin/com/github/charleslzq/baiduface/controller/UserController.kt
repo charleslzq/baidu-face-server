@@ -13,26 +13,26 @@ import org.springframework.web.bind.annotation.RestController
 class UserController {
 
     @Autowired
-    lateinit var baiduFaceApi: BaiduFaceApi
+    private lateinit var baiduFaceApi: BaiduFaceApi
 
     @List
     fun list(
-            @PathVariable("groupId") groupId: String,
+            @PathVariable groupId: String,
             @RequestParam(value = "start", required = false, defaultValue = "0") start: Int,
             @RequestParam(value = "length", required = false, defaultValue = "100") length: Int
     ) = baiduFaceApi.listUser(groupId, PageOptions(start, length))
 
     @Get
     fun get(
-            @PathVariable("groupId") groupId: String,
-            @PathVariable("userId") userId: String
-    ) = baiduFaceApi.getUser(groupId, userId)
+            @PathVariable groupId: String,
+            @PathVariable id: String
+    ) = baiduFaceApi.getUser(groupId, id)
 
     @Delete
     fun delete(
-            @PathVariable("groupId") groupId: String,
-            @PathVariable("id") userId: String
-    ) = baiduFaceApi.deleteUser(groupId, userId)
+            @PathVariable groupId: String,
+            @PathVariable id: String
+    ) = baiduFaceApi.deleteUser(groupId, id)
 
 
     //todo 注册,更新, 拷贝

@@ -11,20 +11,20 @@ import org.springframework.web.bind.annotation.RestController
 class FaceController {
 
     @Autowired
-    lateinit var baiduFaceApi: BaiduFaceApi
+    private lateinit var baiduFaceApi: BaiduFaceApi
 
     @List
     fun list(
-            @PathVariable("groupId") groupId: String,
-            @PathVariable("userId") userId: String
+            @PathVariable groupId: String,
+            @PathVariable userId: String
     ) = baiduFaceApi.listFace(groupId, userId)
 
     @Delete
     fun delete(
-            @PathVariable("groupId") groupId: String,
-            @PathVariable("userId") userId: String,
-            @PathVariable("id") faceToken: String
-    ) = baiduFaceApi.deleteFace(groupId, userId, faceToken)
+            @PathVariable groupId: String,
+            @PathVariable userId: String,
+            @PathVariable id: String
+    ) = baiduFaceApi.deleteFace(groupId, userId, id)
 
     // todo 检测,搜索,对比认证
 }
