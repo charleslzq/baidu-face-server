@@ -1,6 +1,7 @@
 package com.github.charleslzq.baiduface.client
 
 import com.baidu.aip.face.AipFace
+import com.github.charleslzq.baiduface.client.io.*
 import com.google.gson.Gson
 import org.json.JSONObject
 

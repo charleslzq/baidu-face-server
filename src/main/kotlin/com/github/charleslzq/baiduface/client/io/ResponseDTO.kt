@@ -1,16 +1,6 @@
-package com.github.charleslzq.baiduface.client
+package com.github.charleslzq.baiduface.client.io
 
 import com.google.gson.annotations.SerializedName
-import com.google.gson.reflect.TypeToken
-
-data class DetectResult(
-        @SerializedName("face_num") val count: Int,
-        @SerializedName("face_list") val faceList: List<DetectedFace>
-) {
-    companion object : FromJson<DetectResult> {
-        override val RESPONSE_TYPE_TOKEN = object : TypeToken<BaiduResponse<DetectResult>>() {}
-    }
-}
 
 data class DetectedFace(
         @SerializedName("face_token") val faceToken: String,
@@ -126,4 +116,14 @@ data class Occlusion(
         @SerializedName("left_cheek") val leftCheek: Double,
         @SerializedName("right_cheek") val rightCheek: Double,
         val chin: Double
+)
+
+data class QueriedUser(
+        @SerializedName("group_id") val groupId: String,
+        @SerializedName("user_info") val userInfo: String
+)
+
+data class FaceListItem(
+        @SerializedName("face_token") val faceToken: String,
+        @SerializedName("ctime") val createTime: String
 )

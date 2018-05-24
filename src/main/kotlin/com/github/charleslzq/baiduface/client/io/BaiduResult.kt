@@ -1,9 +1,19 @@
-package com.github.charleslzq.baiduface.client
+package com.github.charleslzq.baiduface.client.io
 
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import com.google.gson.reflect.TypeToken
 import org.json.JSONObject
+
+interface FromJson<D> {
+    val RESPONSE_TYPE_TOKEN: TypeToken<BaiduResponse<D>>
+    fun fromJson(gson: Gson, getter: () -> JSONObject) = fromJsonObject(gson, getter())
+    fun fromJsonObject(gson: Gson, json: JSONObject) = convertJsonObject(json, convertUseGson(gson))
+    fun convertJsonObject(json: JSONObject, convert: (JSONObject, TypeToken<BaiduResponse<D>>) -> BaiduResponse<D>) = convert(json, RESPONSE_TYPE_TOKEN)
+    fun convertUseGson(gson: Gson): (JSONObject, TypeToken<BaiduResponse<D>>) -> BaiduResponse<D> = { json, typeToken ->
+        gson.fromJson(json.toString(), typeToken.type)
+    }
+}
 
 data class BaiduResponse<D>(
         val result: D?,
@@ -14,6 +24,15 @@ data class BaiduResponse<D>(
 ) {
     companion object : FromJson<Any> {
         override val RESPONSE_TYPE_TOKEN: TypeToken<BaiduResponse<Any>> = object : TypeToken<BaiduResponse<Any>>() {}
+    }
+}
+
+data class DetectResult(
+        @SerializedName("face_num") val count: Int,
+        @SerializedName("face_list") val faceList: List<DetectedFace>
+) {
+    companion object : FromJson<DetectResult> {
+        override val RESPONSE_TYPE_TOKEN = object : TypeToken<BaiduResponse<DetectResult>>() {}
     }
 }
 
@@ -50,11 +69,6 @@ data class UserQueryResult(
     }
 }
 
-data class QueriedUser(
-        @SerializedName("group_id") val groupId: String,
-        @SerializedName("user_info") val userInfo: String
-)
-
 data class FaceListResult(
         @SerializedName("face_list") val faceList: List<FaceListItem>
 ) {
@@ -62,11 +76,6 @@ data class FaceListResult(
         override val RESPONSE_TYPE_TOKEN: TypeToken<BaiduResponse<FaceListResult>> = object : TypeToken<BaiduResponse<FaceListResult>>() {}
     }
 }
-
-data class FaceListItem(
-        @SerializedName("face_token") val faceToken: String,
-        @SerializedName("ctime") val createTime: String
-)
 
 data class UserIdList(
         @SerializedName("user_id_list") val userIdList: List<String>
@@ -81,15 +90,5 @@ data class GroupIdList(
 ) {
     companion object : FromJson<GroupIdList> {
         override val RESPONSE_TYPE_TOKEN: TypeToken<BaiduResponse<GroupIdList>> = object : TypeToken<BaiduResponse<GroupIdList>>() {}
-    }
-}
-
-interface FromJson<D> {
-    val RESPONSE_TYPE_TOKEN: TypeToken<BaiduResponse<D>>
-    fun fromJson(gson: Gson, getter: () -> JSONObject) = fromJsonObject(gson, getter())
-    fun fromJsonObject(gson: Gson, json: JSONObject) = convertJsonObject(json, convertUseGson(gson))
-    fun convertJsonObject(json: JSONObject, convert: (JSONObject, TypeToken<BaiduResponse<D>>) -> BaiduResponse<D>) = convert(json, RESPONSE_TYPE_TOKEN)
-    fun convertUseGson(gson: Gson): (JSONObject, TypeToken<BaiduResponse<D>>) -> BaiduResponse<D> = { json, typeToken ->
-        gson.fromJson(json.toString(), typeToken.type)
     }
 }

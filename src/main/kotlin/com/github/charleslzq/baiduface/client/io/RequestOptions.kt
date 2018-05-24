@@ -1,15 +1,4 @@
-package com.github.charleslzq.baiduface.client
-
-data class Image(
-        val type: Type,
-        val data: String
-) {
-    enum class Type {
-        BASE64,
-        URL,
-        FACE_TOKEN
-    }
-}
+package com.github.charleslzq.baiduface.client.io
 
 interface BaiduRequestOptions {
     fun check() {}
@@ -52,33 +41,11 @@ data class DetectOptions(
     }
 }
 
-enum class FaceField(val keyword: String) {
-    AGE("age"),
-    BEAUTY("beauty"),
-    EXPRESSION("expression"),
-    FACE_SHAPE("faceshape"),
-    GENDER("gender"),
-    GLASSES("glasses"),
-    LANDMARK("landmark"),
-    RACE("race"),
-    QUALITY("quality"),
-    FACE_TYPE("facetype"),
-    PARSING("parsing");
-}
-
-enum class FaceSource {
-    LIVE,
-    IDCARD,
-    WATERMARK,
-    CERT
-}
-
 data class SearchOptions(
         val maxUser: Int = 1,
         val quality: QualityControl = QualityControl.NONE,
         val liveness: LivenessControl = LivenessControl.NONE
 ) : BaiduRequestOptions {
-
     override fun check() {
         if (maxUser !in 1..20) {
             throw IllegalArgumentException("Illegal maxCount, expect to be in 1 to 20, actual: $maxUser")
@@ -95,12 +62,6 @@ data class SearchOptions(
         put("user_id", userId)
     }
 }
-
-data class UserMeta(
-        val groupId: String,
-        val userId: String,
-        val userInfo: String? = null
-)
 
 data class RegisterOptions(
         val quality: QualityControl = QualityControl.NONE,
@@ -126,21 +87,6 @@ data class UpdateOptions(
             put("action_type", "replace")
         }
     }
-
-}
-
-enum class QualityControl {
-    NONE,
-    LOW,
-    NORMAL,
-    HIGH
-}
-
-enum class LivenessControl {
-    NONE,
-    LOW,
-    NORMAL,
-    HIGH
 }
 
 data class PageOptions(
@@ -160,6 +106,4 @@ data class PageOptions(
             "start" to start.toString(),
             "length" to length.toString()
     )
-
 }
-
