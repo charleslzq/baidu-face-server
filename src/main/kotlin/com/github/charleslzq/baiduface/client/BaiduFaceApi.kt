@@ -2,6 +2,7 @@ package com.github.charleslzq.baiduface.client
 
 import com.baidu.aip.face.AipFace
 import com.google.gson.Gson
+import org.json.JSONObject
 
 interface BaiduFaceApi {
     fun detect(image: Image, options: DetectOptions = DetectOptions()): BaiduResponse<DetectResult>
@@ -24,62 +25,77 @@ class BaiduFaceApiAdapter(
         private val client: AipFace,
         private val gson: Gson
 ) : BaiduFaceApi {
-    override fun detect(image: Image, options: DetectOptions): BaiduResponse<DetectResult> {
+    override fun detect(image: Image, options: DetectOptions) = DetectResult.fromBaidu {
         options.check()
-        val rawObject = client.detect(image.data, image.type.name, options.toHashmap())
-        return DetectResult.fromJsonObject(gson, rawObject)
+        client.detect(image.data, image.type.name, options.toHashmap())
     }
 
-    override fun search(image: Image, vararg groupId: String, options: SearchOptions): BaiduResponse<SearchResult> {
+    override fun search(image: Image, vararg groupId: String, options: SearchOptions) = SearchResult.fromBaidu {
         options.check()
-        val rawObject = client.search(image.data, image.type.name, groupId.joinToString(","), options.toHashmap())
-        return SearchResult.fromJsonObject(gson, rawObject)
+        client.search(image.data, image.type.name, groupId.joinToString(","), options.toHashmap())
     }
 
-    override fun verify(image: Image, userId: String, options: SearchOptions): BaiduResponse<SearchResult> {
+    override fun verify(image: Image, userId: String, options: SearchOptions) = SearchResult.fromBaidu {
         options.check()
-        val rawObject = client.search(image.data, image.type.name, "", options.withUserId(userId))
-        return SearchResult.fromJsonObject(gson, rawObject)
+        client.search(image.data, image.type.name, "", options.withUserId(userId))
     }
 
-    override fun listGroup(options: PageOptions): BaiduResponse<GroupIdList> {
+    override fun listGroup(options: PageOptions) = GroupIdList.fromBaidu {
         options.check()
-        val rawObject = client.getGroupList(options.toHashmap())
-        return GroupIdList.fromJsonObject(gson, rawObject)
+        client.getGroupList(options.toHashmap())
     }
 
-    override fun addGroup(groupId: String) = BaiduResponse.fromJsonObject(gson, client.groupAdd(groupId, hashMapOf()))
+    override fun addGroup(groupId: String) = BaiduResponse.fromBaidu { client.groupAdd(groupId, hashMapOf()) }
 
-    override fun deleteGroup(groupId: String) = BaiduResponse.fromJsonObject(gson, client.groupDelete(groupId, hashMapOf()))
+    override fun deleteGroup(groupId: String) = BaiduResponse.fromBaidu { client.groupDelete(groupId, hashMapOf()) }
 
-    override fun registerUser(image: Image, userMeta: UserMeta, options: RegisterOptions): BaiduResponse<FaceOperationResult> {
+    override fun registerUser(image: Image, userMeta: UserMeta, options: RegisterOptions) = FaceOperationResult.fromBaidu {
         options.check()
-        val rawObject = client.addUser(image.data, image.type.name, userMeta.groupId, userMeta.userId, options.withUserData(userMeta))
-        return FaceOperationResult.fromJsonObject(gson, rawObject)
+        client.addUser(image.data, image.type.name, userMeta.groupId, userMeta.userId, options.withUserData(userMeta))
     }
 
-    override fun updateUser(image: Image, userMeta: UserMeta, options: UpdateOptions): BaiduResponse<FaceOperationResult> {
+    override fun updateUser(image: Image, userMeta: UserMeta, options: UpdateOptions) = FaceOperationResult.fromBaidu {
         options.check()
-        val rawObject = client.updateUser(image.data, image.type.name, userMeta.groupId, userMeta.userId, options.withUserData(userMeta))
-        return FaceOperationResult.fromJsonObject(gson, rawObject)
+        client.updateUser(image.data, image.type.name, userMeta.groupId, userMeta.userId, options.withUserData(userMeta))
     }
 
-    override fun listUser(groupId: String, options: PageOptions): BaiduResponse<UserIdList> {
+    override fun listUser(groupId: String, options: PageOptions) = UserIdList.fromBaidu {
         options.check()
-        val rawObject = client.getGroupUsers(groupId, options.toHashmap())
-        return UserIdList.fromJsonObject(gson, rawObject)
+        client.getGroupUsers(groupId, options.toHashmap())
     }
 
-    override fun copyUser(userId: String, srcGroup: String, dstGroup: String) = BaiduResponse.fromJsonObject(gson, client.userCopy(userId, hashMapOf(
-            "src_group_id" to srcGroup,
-            "dst_group_id" to dstGroup
-    )))
+    override fun copyUser(userId: String, srcGroup: String, dstGroup: String) = BaiduResponse.fromBaidu {
+        client.userCopy(userId, hashMapOf(
+                "src_group_id" to srcGroup,
+                "dst_group_id" to dstGroup
+        ))
+    }
 
-    override fun getUser(groupId: String, userId: String) = UserQueryResult.fromJsonObject(gson, client.getUser(userId, groupId, hashMapOf()))
+    override fun getUser(groupId: String, userId: String) = UserQueryResult.fromBaidu { client.getUser(userId, groupId, hashMapOf()) }
 
-    override fun deleteUser(groupId: String, userId: String) = BaiduResponse.fromJsonObject(gson, client.deleteUser(groupId, userId, hashMapOf()))
+    override fun deleteUser(groupId: String, userId: String) = BaiduResponse.fromBaidu { client.deleteUser(groupId, userId, hashMapOf()) }
 
-    override fun listFace(groupId: String, userId: String) = FaceListResult.fromJsonObject(gson, client.faceGetlist(userId, groupId, hashMapOf()))
+    override fun listFace(groupId: String, userId: String) = FaceListResult.fromBaidu { client.faceGetlist(userId, groupId, hashMapOf()) }
 
-    override fun deleteFace(groupId: String, userId: String, faceToken: String) = BaiduResponse.fromJsonObject(gson, client.faceDelete(userId, groupId, faceToken, hashMapOf()))
+    override fun deleteFace(groupId: String, userId: String, faceToken: String) = BaiduResponse.fromBaidu { client.faceDelete(userId, groupId, faceToken, hashMapOf()) }
+
+    private fun <T> FromJson<T>.fromBaidu(get: () -> JSONObject) = handleException {
+        fromJson(gson, get)
+    }
+
+    private fun <T> handleException(handler: (Throwable) -> BaiduResponse<T> = this::defaultExceptionHandler, get: () -> BaiduResponse<T>): BaiduResponse<T> {
+        return try {
+            get()
+        } catch (throwable: Throwable) {
+            handler(throwable)
+        }
+    }
+
+    private fun <T> defaultExceptionHandler(throwable: Throwable): BaiduResponse<T> = BaiduResponse(
+            result = null,
+            logId = "",
+            errorCode = "-1",
+            errorMsg = throwable.localizedMessage,
+            timestamp = System.currentTimeMillis()
+    )
 }

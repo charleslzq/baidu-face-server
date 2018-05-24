@@ -45,6 +45,11 @@ data class DetectOptions(
     private fun List<FaceField>.string() = joinToString(",") {
         it.keyword
     }
+
+    companion object {
+        @JvmStatic
+        fun requireAllFields(options: DetectOptions = DetectOptions()) = options.copy(fields = FaceField.values().toList())
+    }
 }
 
 enum class FaceField(val keyword: String) {

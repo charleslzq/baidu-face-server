@@ -86,6 +86,7 @@ data class GroupIdList(
 
 interface FromJson<D> {
     val RESPONSE_TYPE_TOKEN: TypeToken<BaiduResponse<D>>
+    fun fromJson(gson: Gson, getter: () -> JSONObject) = fromJsonObject(gson, getter())
     fun fromJsonObject(gson: Gson, json: JSONObject) = convertJsonObject(json, convertUseGson(gson))
     fun convertJsonObject(json: JSONObject, convert: (JSONObject, TypeToken<BaiduResponse<D>>) -> BaiduResponse<D>) = convert(json, RESPONSE_TYPE_TOKEN)
     fun convertUseGson(gson: Gson): (JSONObject, TypeToken<BaiduResponse<D>>) -> BaiduResponse<D> = { json, typeToken ->
