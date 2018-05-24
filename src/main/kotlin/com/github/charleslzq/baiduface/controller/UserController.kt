@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/groups/{groupId}/users")
+@RequestMapping("/baidu-faces/groups/{groupId}/users")
 class UserController {
 
     @Autowired

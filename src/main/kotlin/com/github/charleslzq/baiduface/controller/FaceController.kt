@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/groups/{groupId}/users/{userId}/faces")
+@RequestMapping("/baidu-faces/groups/{groupId}/users/{userId}/faces")
 class FaceController {
 
     @Autowired
@@ -25,6 +25,4 @@ class FaceController {
             @PathVariable userId: String,
             @PathVariable id: String
     ) = baiduFaceApi.deleteFace(groupId, userId, id)
-
-    // todo 检测,搜索,对比认证
 }

@@ -1,6 +1,7 @@
 package com.github.charleslzq.baiduface
 
 import com.github.charleslzq.baiduface.controller.FaceController
+import com.github.charleslzq.baiduface.controller.ImageController
 import com.github.charleslzq.baiduface.controller.UserController
 import com.github.charleslzq.baiduface.controller.UserGroupController
 import org.springframework.boot.SpringApplication
@@ -23,6 +24,7 @@ open class BaiduFaceApplication {
 @Import(
         UserGroupController::class,
         UserController::class,
-        FaceController::class
+        FaceController::class,
+        ImageController::class
 )
 annotation class EnableBaiduFaceController

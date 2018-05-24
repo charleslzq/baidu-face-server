@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/groups")
+@RequestMapping("/baidu-faces/groups")
 class UserGroupController {
     @Autowired
     private lateinit var baiduFaceApi: BaiduFaceApi
