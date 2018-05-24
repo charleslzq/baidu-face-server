@@ -1,6 +1,8 @@
 package com.github.charleslzq.baiduface
 
-import com.github.charleslzq.baiduface.client.AipFaceClientConfiguration
+import com.github.charleslzq.baiduface.controller.FaceController
+import com.github.charleslzq.baiduface.controller.UserController
+import com.github.charleslzq.baiduface.controller.UserGroupController
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.context.annotation.Import
@@ -18,5 +20,5 @@ open class BaiduFaceApplication {
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.SOURCE)
 @MustBeDocumented
-@Import(AipFaceClientConfiguration::class)
-annotation class EnableBaiduFaceServer
+@Import(UserGroupController::class, UserController::class, FaceController::class)
+annotation class EnableBaiduFaceController
