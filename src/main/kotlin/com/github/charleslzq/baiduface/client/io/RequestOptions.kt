@@ -58,8 +58,8 @@ data class SearchOptions(
             "liveness_control" to liveness.name
     )
 
-    fun withUserId(userId: String) = toHashmap().apply {
-        put("user_id", userId)
+    fun withUserId(userId: String?) = toHashmap().apply {
+        userId?.let { put("user_id", it) }
     }
 }
 

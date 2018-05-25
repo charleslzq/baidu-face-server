@@ -7,8 +7,7 @@ import org.json.JSONObject
 
 interface BaiduFaceApi {
     fun detect(image: Image, options: DetectOptions = DetectOptions()): BaiduResponse<DetectResult>
-    fun search(image: Image, vararg groupId: String, options: SearchOptions = SearchOptions()): BaiduResponse<SearchResult>
-    fun verify(image: Image, userId: String, options: SearchOptions = SearchOptions()): BaiduResponse<SearchResult>
+    fun search(image: Image, vararg groupId: String, userId: String? = null, options: SearchOptions = SearchOptions()): BaiduResponse<SearchResult>
     fun listGroup(options: PageOptions): BaiduResponse<GroupIdList>
     fun addGroup(groupId: String): BaiduResponse<*>
     fun deleteGroup(groupId: String): BaiduResponse<*>
@@ -31,14 +30,9 @@ class BaiduFaceApiAdapter(
         client.detect(image.data, image.type.name, options.toHashmap())
     }
 
-    override fun search(image: Image, vararg groupId: String, options: SearchOptions) = SearchResult.fromBaidu {
+    override fun search(image: Image, vararg groupId: String, userId: String?, options: SearchOptions) = SearchResult.fromBaidu {
         options.check()
-        client.search(image.data, image.type.name, groupId.joinToString(","), options.toHashmap())
-    }
-
-    override fun verify(image: Image, userId: String, options: SearchOptions) = SearchResult.fromBaidu {
-        options.check()
-        client.search(image.data, image.type.name, "", options.withUserId(userId))
+        client.search(image.data, image.type.name, groupId.joinToString(","), options.withUserId(userId))
     }
 
     override fun listGroup(options: PageOptions) = GroupIdList.fromBaidu {
