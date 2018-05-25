@@ -8,6 +8,7 @@ import org.json.JSONObject
 interface BaiduFaceApi {
     fun detect(image: Image, options: DetectOptions = DetectOptions()): BaiduResponse<DetectResult>
     fun search(image: Image, vararg groupId: String, userId: String? = null, options: SearchOptions = SearchOptions()): BaiduResponse<SearchResult>
+    fun match(vararg images: MatchReq): BaiduResponse<MatchResult>
     fun listGroup(options: PageOptions): BaiduResponse<GroupIdList>
     fun addGroup(groupId: String): BaiduResponse<*>
     fun deleteGroup(groupId: String): BaiduResponse<*>
@@ -33,6 +34,10 @@ class BaiduFaceApiAdapter(
     override fun search(image: Image, vararg groupId: String, userId: String?, options: SearchOptions) = SearchResult.fromBaidu {
         options.check()
         client.search(image.data, image.type.name, groupId.joinToString(","), options.withUserId(userId))
+    }
+
+    override fun match(vararg images: MatchReq) = MatchResult.fromBaidu {
+        client.match(images.map { it.toMatchRequest() })
     }
 
     override fun listGroup(options: PageOptions) = GroupIdList.fromBaidu {

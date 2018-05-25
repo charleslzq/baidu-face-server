@@ -99,3 +99,12 @@ data class GroupIdList(
         override val RESPONSE_TYPE_TOKEN: TypeToken<BaiduResponse<GroupIdList>> = object : TypeToken<BaiduResponse<GroupIdList>>() {}
     }
 }
+
+data class MatchResult(
+        val score: Float,
+        @SerializedName("face_list") val faceList: List<FaceToken>
+) {
+    companion object : FromJson<MatchResult> {
+        override val RESPONSE_TYPE_TOKEN: TypeToken<BaiduResponse<MatchResult>> = object : TypeToken<BaiduResponse<MatchResult>>() {}
+    }
+}

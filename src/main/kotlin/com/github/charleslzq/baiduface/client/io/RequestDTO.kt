@@ -1,5 +1,7 @@
 package com.github.charleslzq.baiduface.client.io
 
+import com.baidu.aip.face.MatchRequest
+
 data class Image(
         val type: Type = Type.BASE64,
         val data: String = ""
@@ -50,5 +52,20 @@ enum class LivenessControl {
     LOW,
     NORMAL,
     HIGH
+}
+
+data class MatchReq(
+        val image: Image = Image(),
+        val source: FaceSource = FaceSource.LIVE,
+        val quality: QualityControl = QualityControl.NONE,
+        val liveness: LivenessControl = LivenessControl.NONE
+) {
+    fun toMatchRequest() = MatchRequest(
+            image.data,
+            image.type.name,
+            source.name,
+            quality.name,
+            liveness.name
+    )
 }
 

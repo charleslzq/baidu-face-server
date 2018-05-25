@@ -38,4 +38,9 @@ class ImageController {
                 options = SearchOptions(maxUser, quality, liveness)
         )
     }
+
+    @RequestMapping(value = ["match"], method = [RequestMethod.POST])
+    fun match(
+            @RequestBody images: Array<MatchReq>
+    ) = baiduFaceApi.match(*images)
 }

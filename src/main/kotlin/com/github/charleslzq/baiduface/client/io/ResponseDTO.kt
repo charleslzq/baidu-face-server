@@ -127,3 +127,7 @@ data class FaceListItem(
         @SerializedName("face_token") val faceToken: String,
         @SerializedName("ctime") val createTime: String
 )
+
+data class FaceToken(
+        @SerializedName("face_token") val faceToken: String
+)
