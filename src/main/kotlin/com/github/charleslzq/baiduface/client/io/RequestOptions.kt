@@ -1,5 +1,9 @@
 package com.github.charleslzq.baiduface.client.io
 
+fun List<FaceField>.string() = joinToString(",") {
+    it.keyword
+}
+
 interface BaiduRequestOptions {
     fun check() {}
     fun toHashmap(): HashMap<String, String>
@@ -29,10 +33,6 @@ data class DetectOptions(
         if (fields.isNotEmpty()) {
             put("face_field", fields.string())
         }
-    }
-
-    private fun List<FaceField>.string() = joinToString(",") {
-        it.keyword
     }
 
     companion object {

@@ -1,5 +1,6 @@
 package com.github.charleslzq.baiduface.client.io
 
+import com.baidu.aip.face.FaceVerifyRequest
 import com.baidu.aip.face.MatchRequest
 
 data class Image(
@@ -66,6 +67,18 @@ data class MatchReq(
             source.name,
             quality.name,
             liveness.name
+    )
+}
+
+data class FaceVerifyReq(
+        val image: Image = Image(),
+        val complete: Boolean = false,
+        val fields: List<FaceField> = emptyList()
+) {
+    fun toFaceVerifyRequest() = FaceVerifyRequest(
+            image.data,
+            image.type.name,
+            (if (complete) FaceField.values().toList() else fields).string()
     )
 }
 

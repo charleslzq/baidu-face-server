@@ -131,3 +131,9 @@ data class FaceListItem(
 data class FaceToken(
         @SerializedName("face_token") val faceToken: String
 )
+
+data class VerifyThreshold(
+        @SerializedName("frr_1e-4") val err10000th: Float,
+        @SerializedName("frr_1e-3") val err1000th: Float,
+        @SerializedName("frr_1e-2") val err100th: Float
+)

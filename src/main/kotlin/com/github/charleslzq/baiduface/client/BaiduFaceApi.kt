@@ -9,6 +9,7 @@ interface BaiduFaceApi {
     fun detect(image: Image, options: DetectOptions = DetectOptions()): BaiduResponse<DetectResult>
     fun search(image: Image, vararg groupId: String, userId: String? = null, options: SearchOptions = SearchOptions()): BaiduResponse<SearchResult>
     fun match(vararg images: MatchReq): BaiduResponse<MatchResult>
+    fun verify(vararg verifyReq: FaceVerifyReq): BaiduResponse<VerifyResult>
     fun listGroup(options: PageOptions): BaiduResponse<GroupIdList>
     fun addGroup(groupId: String): BaiduResponse<*>
     fun deleteGroup(groupId: String): BaiduResponse<*>
@@ -38,6 +39,10 @@ class BaiduFaceApiAdapter(
 
     override fun match(vararg images: MatchReq) = MatchResult.fromBaidu {
         client.match(images.map { it.toMatchRequest() })
+    }
+
+    override fun verify(vararg verifyReq: FaceVerifyReq) = VerifyResult.fromBaidu {
+        client.faceverify(verifyReq.map { it.toFaceVerifyRequest() })
     }
 
     override fun listGroup(options: PageOptions) = GroupIdList.fromBaidu {

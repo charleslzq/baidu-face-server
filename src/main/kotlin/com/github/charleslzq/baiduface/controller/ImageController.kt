@@ -43,4 +43,13 @@ class ImageController {
     fun match(
             @RequestBody images: Array<MatchReq>
     ) = baiduFaceApi.match(*images)
+
+    @RequestMapping(value = ["verify"], method = [RequestMethod.POST])
+    fun verify(
+            @RequestBody images: Array<FaceVerifyReq>
+    ) = if (images.isNotEmpty()) {
+        baiduFaceApi.verify(*images)
+    } else {
+        BaiduResponse.errResponse("No data to verify")
+    }
 }

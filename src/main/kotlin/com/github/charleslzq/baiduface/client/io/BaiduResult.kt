@@ -108,3 +108,13 @@ data class MatchResult(
         override val RESPONSE_TYPE_TOKEN: TypeToken<BaiduResponse<MatchResult>> = object : TypeToken<BaiduResponse<MatchResult>>() {}
     }
 }
+
+data class VerifyResult(
+        @SerializedName("face_liveness") val liveness: Float,
+        val thresholds: VerifyThreshold,
+        @SerializedName("face_list") val faceList: List<DetectedFace>
+) {
+    companion object : FromJson<VerifyResult> {
+        override val RESPONSE_TYPE_TOKEN: TypeToken<BaiduResponse<VerifyResult>> = object : TypeToken<BaiduResponse<VerifyResult>>() {}
+    }
+}
