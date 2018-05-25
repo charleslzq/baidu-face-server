@@ -24,6 +24,13 @@ data class BaiduResponse<D>(
 ) {
     companion object : FromJson<Any> {
         override val RESPONSE_TYPE_TOKEN: TypeToken<BaiduResponse<Any>> = object : TypeToken<BaiduResponse<Any>>() {}
+        fun <T> errResponse(errMsg: String, errCode: String = "-1") = BaiduResponse<T>(
+                result = null,
+                logId = "",
+                errorCode = errCode,
+                errorMsg = errMsg,
+                timestamp = System.currentTimeMillis()
+        )
     }
 }
 

@@ -63,7 +63,7 @@ data class SearchOptions(
     }
 }
 
-data class RegisterOptions(
+data class ImageOptions(
         val quality: QualityControl = QualityControl.NONE,
         val liveness: LivenessControl = LivenessControl.NONE
 ) : BaiduRequestOptionsWithUserInfo {
@@ -72,21 +72,6 @@ data class RegisterOptions(
             "liveness_control" to liveness.name
     )
 
-}
-
-data class UpdateOptions(
-        val quality: QualityControl = QualityControl.NONE,
-        val liveness: LivenessControl = LivenessControl.NONE,
-        val autoCreate: Boolean = false
-) : BaiduRequestOptionsWithUserInfo {
-    override fun toHashmap(): HashMap<String, String> = hashMapOf(
-            "quality_control" to quality.name,
-            "liveness_control" to liveness.name
-    ).apply {
-        if (autoCreate) {
-            put("action_type", "replace")
-        }
-    }
 }
 
 data class PageOptions(

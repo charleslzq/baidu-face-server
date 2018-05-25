@@ -12,8 +12,8 @@ interface BaiduFaceApi {
     fun listGroup(options: PageOptions): BaiduResponse<GroupIdList>
     fun addGroup(groupId: String): BaiduResponse<*>
     fun deleteGroup(groupId: String): BaiduResponse<*>
-    fun registerUser(image: Image, userMeta: UserMeta, options: RegisterOptions = RegisterOptions()): BaiduResponse<FaceOperationResult>
-    fun updateUser(image: Image, userMeta: UserMeta, options: UpdateOptions = UpdateOptions()): BaiduResponse<FaceOperationResult>
+    fun registerUser(image: Image, userMeta: UserMeta, options: ImageOptions = ImageOptions()): BaiduResponse<FaceOperationResult>
+    fun updateUser(image: Image, userMeta: UserMeta, options: ImageOptions = ImageOptions()): BaiduResponse<FaceOperationResult>
     fun listUser(groupId: String, options: PageOptions = PageOptions()): BaiduResponse<UserIdList>
     fun copyUser(userId: String, srcGroup: String, dstGroup: String): BaiduResponse<*>
     fun getUser(groupId: String, userId: String): BaiduResponse<UserQueryResult>
@@ -50,12 +50,12 @@ class BaiduFaceApiAdapter(
 
     override fun deleteGroup(groupId: String) = BaiduResponse.fromBaidu { client.groupDelete(groupId, hashMapOf()) }
 
-    override fun registerUser(image: Image, userMeta: UserMeta, options: RegisterOptions) = FaceOperationResult.fromBaidu {
+    override fun registerUser(image: Image, userMeta: UserMeta, options: ImageOptions) = FaceOperationResult.fromBaidu {
         options.check()
         client.addUser(image.data, image.type.name, userMeta.groupId, userMeta.userId, options.withUserData(userMeta))
     }
 
-    override fun updateUser(image: Image, userMeta: UserMeta, options: UpdateOptions) = FaceOperationResult.fromBaidu {
+    override fun updateUser(image: Image, userMeta: UserMeta, options: ImageOptions) = FaceOperationResult.fromBaidu {
         options.check()
         client.updateUser(image.data, image.type.name, userMeta.groupId, userMeta.userId, options.withUserData(userMeta))
     }
@@ -92,11 +92,5 @@ class BaiduFaceApiAdapter(
         }
     }
 
-    private fun <T> defaultExceptionHandler(throwable: Throwable): BaiduResponse<T> = BaiduResponse(
-            result = null,
-            logId = "",
-            errorCode = "-1",
-            errorMsg = throwable.localizedMessage,
-            timestamp = System.currentTimeMillis()
-    )
+    private fun <T> defaultExceptionHandler(throwable: Throwable): BaiduResponse<T> = BaiduResponse.errResponse(throwable.localizedMessage)
 }

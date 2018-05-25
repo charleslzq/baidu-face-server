@@ -22,4 +22,11 @@ class UserGroupController {
 
     @Delete
     fun delete(@PathVariable("id") id: String) = baiduFaceApi.deleteGroup(id)
+
+    @Update
+    fun copy(
+            @PathVariable("id") id: String,
+            @RequestParam srcGroupId: String,
+            @RequestParam userId: String
+    ) = baiduFaceApi.copyUser(userId, srcGroupId, id)
 }

@@ -1,8 +1,8 @@
 package com.github.charleslzq.baiduface.client.io
 
 data class Image(
-        val type: Type,
-        val data: String
+        val type: Type = Type.BASE64,
+        val data: String = ""
 ) {
     enum class Type {
         BASE64,
