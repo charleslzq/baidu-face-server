@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
@@ -70,6 +71,10 @@ class Proxy {
 
 @Configuration
 @EnableConfigurationProperties(AipFaceClientProperties::class)
+@ConditionalOnProperty(
+        name = ["charleslzq.baidu.aipface.client.autoImport"],
+        matchIfMissing = true
+)
 open class AipFaceClientConfiguration {
 
     @Autowired

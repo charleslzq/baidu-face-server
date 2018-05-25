@@ -15,6 +15,12 @@
   ],
   "properties": [
     {
+      "name": "charleslzq.baidu.aipface.client.autoImport",
+      "type": "java.lang.Boolean",
+      "description": "specify whether the client configuration should be imported automatically or not",
+      "defaultValue": true
+    },
+    {
       "name": "charleslzq.baidu.aipface.client.appId",
       "type": "java.lang.String",
       "sourceType": "com.github.charleslzq.baiduface.client.AipFaceClientProperties",
