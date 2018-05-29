@@ -18,7 +18,7 @@ class UserGroupController {
     ) = baiduFaceApi.listGroup(PageOptions(start, length))
 
     @Add
-    fun add(@RequestBody groupId: String) = baiduFaceApi.addGroup(groupId)
+    fun add(@RequestBody groupId: String) = baiduFaceApi.addGroup(groupId.removePrefix("\"").removeSuffix("\""))
 
     @Delete
     fun delete(@PathVariable("id") id: String) = baiduFaceApi.deleteGroup(id)
