@@ -6,11 +6,13 @@ import com.github.charleslzq.baiduface.client.io.DetectOptions
 import com.github.charleslzq.baiduface.client.io.DetectResult
 import com.github.charleslzq.baiduface.client.io.Image
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.annotation.Profile
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/face")
+@Profile("local")
 class TestController {
 
     @Autowired

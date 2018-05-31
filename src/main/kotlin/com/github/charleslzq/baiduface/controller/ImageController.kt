@@ -30,7 +30,7 @@ class ImageController {
             @RequestParam(name = "quality", required = false, defaultValue = "NONE") quality: QualityControl,
             @RequestParam(name = "liveness", required = false, defaultValue = "NONE") liveness: LivenessControl
     ) = if (groups.isEmpty()) {
-        BaiduResponse.errResponse("Need to which group(s) should be searched")
+        BaiduResponse.errResponse("Need to specify which group(s) should be searched")
     } else {
         baiduFaceApi.search(image,
                 groupId = *groups,
