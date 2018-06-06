@@ -73,7 +73,7 @@
       "defaultValue": -1
     },
     {
-      "name": "charleslzq.baidu.aipface.basePath",
+      "name": "charleslzq.baidu.aipFace.basePath",
       "type": "java.lang.String",
       "description": "Specify url prefix for baidu face controllers",
       "defaultValue": "/baidu-faces"
