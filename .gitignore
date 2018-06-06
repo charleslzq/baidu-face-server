@@ -1,4 +1,6 @@
 application-local.yml
+application.yml
+application-aws.yml
 *.iml
 .idea/*
 target/*
